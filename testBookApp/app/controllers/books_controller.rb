@@ -4,6 +4,7 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
+    @authors = Author.all
     @books = Book.all
   end
 
@@ -15,19 +16,26 @@ class BooksController < ApplicationController
   # GET /books/new
   def new
     @book = Book.new
+    @authors = Author.all
+    if @authors.empty?
+      flash[:alert] = 'You have to create an author first.'
+      redirect_to new_author_path
+    end
   end
 
   # GET /books/1/edit
   def edit
+    @authors = Author.all
   end
 
   # POST /books
   # POST /books.json
   def create
     @book = Book.new(book_params)
-
     respond_to do |format|
       if @book.save
+        @author.books_number.nil? ? (@author.books_number=1):(@author.books_number += 1)
+        @author.save
         format.html { redirect_to @book, notice: 'Book was successfully created.' }
         format.json { render :show, status: :created, location: @book }
       else
@@ -40,6 +48,7 @@ class BooksController < ApplicationController
   # PATCH/PUT /books/1
   # PATCH/PUT /books/1.json
   def update
+    @author = Author.find(book_params['author_id'])
     respond_to do |format|
       if @book.update(book_params)
         format.html { redirect_to @book, notice: 'Book was successfully updated.' }
@@ -61,6 +70,13 @@ class BooksController < ApplicationController
     end
   end
 
+  def ajax_books
+    @books = Book.where("author_id = ?", params[:author_id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_book
@@ -69,6 +85,6 @@ class BooksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_params
-      params.require(:book).permit(:name, :published_date, :description, :author_name, :page_number)
+      params.require(:book).permit(:name, :published_date, :description, :author_id, :page_number)
     end
 end

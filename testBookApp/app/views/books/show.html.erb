@@ -17,7 +17,7 @@
 
 <p>
   <strong>Author name:</strong>
-  <%= @book.author_name %>
+  <%= Author.find(@book.author_id).name %>
 </p>
 
 <p>

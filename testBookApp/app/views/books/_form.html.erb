@@ -27,8 +27,9 @@
   </div>
 
   <div class="field">
-    <%= form.label :author_name %>
-    <%= form.text_field :author_name %>
+    <%= form.label :author_id, "Author" %>
+    <% options = options_from_collection_for_select(@authors, 'id', 'name', book.author_id.to_i) %>
+    <%= form.select :author_id, options, {} %>
   </div>
 
   <div class="field">
