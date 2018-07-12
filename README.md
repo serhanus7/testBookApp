@@ -3,8 +3,11 @@
 Welcome in a simple test around rails and some basic data modelling.
 You are going to use an already existing (but very simple) book app, made to manage book, a kind of virtual library.
 
-# Fork it
+# How to end the test
 The test was meant to be forked, so that should be one of your firsts steps of that test, as we expect a link to a repo at the end of the test.
+Your first commit on your new repo should be called "deep blue " + your name
+Your last commit should be 4 hours after the beginning of the test.
+Any commit AFTER this time won't be taken into account for the test.
 
 ## Make everything work
 
